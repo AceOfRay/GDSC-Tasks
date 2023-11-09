@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 
 const loginBtn = document.getElementById("loginButton");
 
+
 loginBtn.addEventListener("click", () => {
   const email = document.getElementById("emailInput").value;
   const pswd = document.getElementById("passwordInput").value;
@@ -14,9 +15,5 @@ loginBtn.addEventListener("click", () => {
       // For example, redirect the user
       window.location.href = "/src/html/taskHome.html";
     })
-    .catch(
-      // Handle the error here
-      window.alert("Error: ")
-    );
 });
 
