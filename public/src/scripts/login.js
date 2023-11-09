@@ -8,9 +8,15 @@ loginBtn.addEventListener("click", () => {
   const email = document.getElementById("emailInput").value;
   const pswd = document.getElementById("passwordInput").value;
 
-  signInWithEmailAndPassword(auth, email, pswd).then((credential) => {
-    //do something with credential
-    // add user to the database
-    window.location.href = "/src/html/taskHome.html";
-  });
+  signInWithEmailAndPassword(auth, email, pswd)
+    .then((credential) => {
+      // User signed in successfully, you can handle it here
+      // For example, redirect the user
+      window.location.href = "/src/html/taskHome.html";
+    })
+    .catch(
+      // Handle the error here
+      window.alert("Error: ")
+    );
 });
+
