@@ -5,7 +5,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
-const container = document.getElementById("taskContainer");
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -24,15 +23,12 @@ onAuthStateChanged(auth, (user) => {
         .padStart(2, "0")}/${dateObject.getFullYear()}`;
 
       // save this task in firebase and have "onChildAdded" take care of real time updates
-      const taskId = generateRandomID();
-      push(ref(database, "users/" + uid), {
+      push(ref(database, "users/" + uid +"/tasks"), {
         date: stringDate,
         taskName: taskName,
         description: description,
         completed: false,
       });
-
-      createTaskElement(taskName, date, description);
     });
   }
 });
@@ -91,7 +87,6 @@ function createTaskElement(name, date, description) {
     .getDate()
     .toString()
     .padStart(2, "0")}/${dateObject.getFullYear()}`;
-  console.log(dateElement.textContent);
   newTask.appendChild(dateElement);
 
   // Create and set the task description
@@ -114,17 +109,4 @@ function createTaskElement(name, date, description) {
   const taskContainer = document.getElementById("taskContainer");
   taskContainer.appendChild(newTask);
   modal.style.display = "none";
-}
-
-function generateRandomID() {
-  const characters = "0123456789";
-  const idLength = 15;
-  let randomID = "";
-
-  for (let i = 0; i < idLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomID += characters.charAt(randomIndex);
-  }
-
-  return randomID;
 }
