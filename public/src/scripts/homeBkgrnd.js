@@ -4,37 +4,28 @@ import {
   ref,
   query,
   orderByChild,
-  get,
   onChildAdded
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    //console.log(auth)
     let uid = user.uid;
-    console.log(user);
-    loadTasks(uid);
+    const tasksRef = ref(database, "users/" + uid + "/tasks");
+    
+    onChildAdded(query(tasksRef, orderByChild("date")), (childSnapshot) => {
+      const taskData = childSnapshot.val();
+      renderTaskElement(
+        taskData.taskName,
+        taskData.date,
+        taskData.description,
+        taskData.completed
+      );
+    });
   }
 });
 
-async function loadTasks(uid) {
-  try {
-    const dbRef = ref(database, "users/" + uid +"/tasks");
-    const q = await query(dbRef)
-    get(q).then((snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        
-        const taskData = childSnapshot.val();
-        //console.log(taskData)
-        renderTaskElement(taskData.taskName, taskData.date, taskData.description, taskData.completed)
-      })
-    })
-  } catch (error) {
-    //handle
-  }
-}
-  
-const modal = document.getElementById("newTaskModal");
+
 function renderTaskElement(name, date, description, checked) {
   // Create a new task element
   const newTask = document.createElement("div");
@@ -85,10 +76,8 @@ function renderTaskElement(name, date, description, checked) {
   optionsButton.appendChild(iconImage);
   newTask.appendChild(optionsButton);
 
-  // Append the new task element to the task container (adjust the container ID as needed)
   const taskContainer = document.getElementById("taskContainer");
   taskContainer.appendChild(newTask);
-
-  modal.style.display = "none";
 }
+
 

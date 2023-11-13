@@ -95,7 +95,18 @@ body {
   flex-direction: column-reverse;
   overflow-y: auto;
   height: auto;
+  max-height:80vh;
 }
+
+#taskContainer::-webkit-scrollbar {
+  background-color: white;
+  width:10px;
+}
+#taskContainer::-webkit-scrollbar-thumb {
+  background-color: rgb(197, 224, 248);
+  border-radius:1vh;
+}
+
 .task {
   display:flex;
   align-items:center;

@@ -29,6 +29,7 @@ onAuthStateChanged(auth, (user) => {
         description: description,
         completed: false,
       });
+      modal.style.display = "none";
     });
   }
 });
@@ -108,5 +109,4 @@ function createTaskElement(name, date, description) {
   // Append the new task element to the task container (adjust the container ID as needed)
   const taskContainer = document.getElementById("taskContainer");
   taskContainer.appendChild(newTask);
-  modal.style.display = "none";
 }
