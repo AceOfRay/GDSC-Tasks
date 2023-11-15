@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasks Home</title>
     <link rel="stylesheet" href="/src/css/home.css" />
+    <link rel="icon" href="/src/images/Tasks Logo.png" type="image/png">
   </head>
   <body>
     <aside>
       <div class="sidebarContainer">
         <img src="/src/images/Tasks Logo.png" alt="Tasks Logo" id="logo" />
         <div id="aboutUser">
-          About the user
-          <!--user information rendered here-->
+          Signed in with
+          <p id="currentUserEmail"></p>
         </div>
         <button type="button" class="sideButton" id="newTask">New Task</button>
-        <button type="button" class="sideButton" id="logout">Logout</button>
+        <a class="sideButton" id="logout" href="/src/index.html">Logout</a>
       </div>
     </aside>
     <nav id="nav">GDSC Tasks</nav>
@@ -56,4 +57,5 @@
   </div>
   <script type="module" src="/src/scripts/homeBkgrnd.js"></script>
   <script type="module" src="/src/scripts/newTask.js"></script>
+  <script type="module" src="/src/scripts/logout.js"></script>
 </html>

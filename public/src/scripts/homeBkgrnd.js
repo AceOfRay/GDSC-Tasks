@@ -5,7 +5,8 @@ import {
   query,
   orderByChild,
   onChildAdded,
-  update
+  update,
+  remove
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
 
@@ -14,6 +15,10 @@ onAuthStateChanged(auth, (user) => {
     let uid = user.uid;
     const tasksRef = ref(database, "users/" + uid + "/tasks");
     
+    const userEmail = document.getElementById('currentUserEmail');
+    userEmail.textContent = user.email
+
+
     onChildAdded(query(tasksRef, orderByChild("date")), (childSnapshot) => {
       const taskData = childSnapshot.val();
       const key = childSnapshot.key
@@ -34,6 +39,7 @@ function renderTaskElement(uid, key, name, date, description, checked) {
   // Create a new task element
   const newTask = document.createElement("div");
   newTask.className = "task";
+  newTask.id = key;
 
   // Create the completion checkbox
   const completionDiv = document.createElement("div");
@@ -79,10 +85,14 @@ function renderTaskElement(uid, key, name, date, description, checked) {
   const optionsButton = document.createElement("button");
   optionsButton.id = "optionsBtn";
   const iconImage = document.createElement("img");
-  iconImage.src = "/src/images/infoIcon.gif";
+  iconImage.src = "/src/images/trashIcon.png";
   iconImage.alt = "Icon";
   iconImage.id = "imgIcon";
   optionsButton.appendChild(iconImage);
+  optionsButton.addEventListener('click', () => {
+    deleteTask(uid, key)
+    removeTaskFromClientSide(key)
+  })
   newTask.appendChild(optionsButton);
 
   const taskContainer = document.getElementById("taskContainer");
@@ -96,3 +106,14 @@ function updateCompletedField(uid, taskId, completed) {
     completed: completed
   });
 } 
+
+function deleteTask(uid, taskId) {
+  const taskRef = ref(database, "users/" + uid + "/tasks/" + taskId);
+  remove(taskRef);
+}
+
+function removeTaskFromClientSide(key) {
+  const task = document.getElementById(key);
+  task.style.display = 'none';
+}
+

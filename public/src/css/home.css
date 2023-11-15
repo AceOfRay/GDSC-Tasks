@@ -78,10 +78,23 @@ body {
 }
 
 #aboutUser {
-  height: 25vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  height: 15vh;
   width: 100%;
-  border: 1px solid black;
-  border-radius: 10%;
+  overflow: hidden;
+}
+
+#currentUserEmail {
+  max-width: 100%;
+  width: fit-content;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #logo {
@@ -146,7 +159,10 @@ body {
   padding:1vh;
   border:none;
   border-radius:2vh;
-  width:15vh;
+  width:auto;
+  text-decoration: none;
+  display:flex;
+  justify-content: center;
 }
 
 #foot {
