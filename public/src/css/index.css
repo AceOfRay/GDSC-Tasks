@@ -9,7 +9,7 @@ body {
 
 * {
   font-size: 3vh;
-  color: black;
+  color: rgb(21, 101, 206);
   font-weight: 200;
   font-family: "Times New Roman", Times, serif;
 }
@@ -42,7 +42,7 @@ nav {
 
 #title {
   font-size: 5vh;
-  color: black;
+  color: rgb(21, 101, 206);
   font-weight: 200;
   font-family: "Times New Roman", Times, serif;
 }
