@@ -19,4 +19,3 @@ const auth = getAuth(app);
 
 export { database, auth };
 
-console.log("connected");

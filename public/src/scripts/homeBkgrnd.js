@@ -4,7 +4,8 @@ import {
   ref,
   query,
   orderByChild,
-  onChildAdded
+  onChildAdded,
+  update
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
 
@@ -15,7 +16,10 @@ onAuthStateChanged(auth, (user) => {
     
     onChildAdded(query(tasksRef, orderByChild("date")), (childSnapshot) => {
       const taskData = childSnapshot.val();
+      const key = childSnapshot.key
       renderTaskElement(
+        uid,
+        key,
         taskData.taskName,
         taskData.date,
         taskData.description,
@@ -26,7 +30,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-function renderTaskElement(name, date, description, checked) {
+function renderTaskElement(uid, key, name, date, description, checked) {
   // Create a new task element
   const newTask = document.createElement("div");
   newTask.className = "task";
@@ -39,6 +43,11 @@ function renderTaskElement(name, date, description, checked) {
   completionCheckbox.name = "completed";
   completionCheckbox.id = "completionCheckbox";
   completionCheckbox.checked = checked
+
+  completionCheckbox.addEventListener("change", () => {
+    updateCompletedField(uid, key, completionCheckbox.checked);
+  });
+
   completionDiv.appendChild(completionCheckbox);
   newTask.appendChild(completionDiv);
 
@@ -81,3 +90,9 @@ function renderTaskElement(name, date, description, checked) {
 }
 
 
+function updateCompletedField(uid, taskId, completed) {
+  const taskRef = ref(database, "users/" + uid + "/tasks/" + taskId);
+  update(taskRef, {
+    completed: completed
+  });
+} 

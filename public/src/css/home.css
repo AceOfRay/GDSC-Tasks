@@ -91,7 +91,7 @@ body {
 }
 
 #taskContainer {
-  display: flexbox;
+  display: flex;
   flex-direction: column-reverse;
   overflow-y: auto;
   height: auto;
