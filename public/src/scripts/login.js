@@ -11,8 +11,6 @@ loginBtn.addEventListener("click", () => {
 
   signInWithEmailAndPassword(auth, email, pswd)
     .then((credential) => {
-      // User signed in successfully, you can handle it here
-      // For example, redirect the user
       window.location.href = "/src/html/taskHome.html";
     })
 });
