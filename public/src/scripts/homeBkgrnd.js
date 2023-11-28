@@ -6,6 +6,7 @@ import {
   orderByChild,
   onChildAdded,
   update,
+  remove
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
 class Task {
@@ -21,6 +22,7 @@ class Task {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    console.log(user)
     let uid = user.uid;
     const tasksRef = ref(database, "users/" + uid + "/tasks");
 
@@ -37,9 +39,12 @@ onAuthStateChanged(auth, (user) => {
         taskData.description,
         taskData.completed
       );
-
+      
       renderTaskElement(newTask);
     });
+    const userEmail = user.email
+    const emailElement = document.getElementById('currentUserEmail')
+    emailElement.textContent = userEmail;
   }
 });
 
@@ -47,6 +52,7 @@ function renderTaskElement(task) {
   // Create a new task element
   const newTask = document.createElement("div");
   newTask.className = "task";
+  newTask.id = task.key;
 
   // Create the completion checkbox
   const completionDiv = document.createElement("div");
@@ -91,14 +97,21 @@ newTask.appendChild(descriptionElement);
 
 
   // Create the options button with the icon
-  const optionsButton = document.createElement("button");
-  optionsButton.id = "optionsBtn";
+  const deleteBtn = document.createElement("button");
+  deleteBtn.id = "optionsBtn";
+  deleteBtn.addEventListener('click', async () => {
+    const deleteRef = ref(database, "users/" + task.uid + "/tasks/" + task.key)
+    remove(deleteRef);
+    const removedElement = document.getElementById(task.key)
+    removedElement.style.display = 'none';
+  
+  })
   const iconImage = document.createElement("img");
-  iconImage.src = "/src/images/infoIcon.gif";
+  iconImage.src = "/src/images/trashIcon.png";
   iconImage.alt = "Icon";
   iconImage.id = "imgIcon";
-  optionsButton.appendChild(iconImage);
-  newTask.appendChild(optionsButton);
+  deleteBtn.appendChild(iconImage);
+  newTask.appendChild(deleteBtn);
 
   const taskContainer = document.getElementById("taskContainer");
   taskContainer.appendChild(newTask);
@@ -107,6 +120,6 @@ newTask.appendChild(descriptionElement);
 function updateCompletedField(task) {
   const taskRef = ref(database, "users/" + task.uid + "/tasks/" + task.key);
   update(taskRef, {
-    completed: task.status,
+    completed: !task.status,
   });
 }
