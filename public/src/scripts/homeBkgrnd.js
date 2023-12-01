@@ -1,5 +1,5 @@
 import { auth, database } from "./init.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import {
   ref,
   query,
@@ -123,3 +123,12 @@ function updateCompletedField(task) {
     completed: !task.status,
   });
 }
+
+const firebaseLogout = () => {
+  signOut(auth).then(() => {
+    window.location.href = "../index.html"
+  })
+}
+
+const logoutBtn = document.getElementById('logout');
+logoutBtn.addEventListener('click', firebaseLogout)

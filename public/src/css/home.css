@@ -153,17 +153,6 @@ body {
   width:3vh;
 }
 
-.sideButton {
-  background-color: aliceblue;
-  cursor:pointer;
-  padding:1vh;
-  border:none;
-  border-radius:2vh;
-  width:auto;
-  text-decoration: none;
-  display:flex;
-  justify-content: center;
-}
 
 #foot {
   position:fixed;
