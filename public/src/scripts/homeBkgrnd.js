@@ -1,12 +1,15 @@
 import { auth, database } from "./init.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import {
   ref,
   query,
   orderByChild,
   onChildAdded,
   update,
-  remove
+  remove,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
 class Task {
@@ -22,7 +25,7 @@ class Task {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log(user)
+    console.log(user);
     let uid = user.uid;
     const tasksRef = ref(database, "users/" + uid + "/tasks");
 
@@ -39,11 +42,11 @@ onAuthStateChanged(auth, (user) => {
         taskData.description,
         taskData.completed
       );
-      
+
       renderTaskElement(newTask);
     });
-    const userEmail = user.email
-    const emailElement = document.getElementById('currentUserEmail')
+    const userEmail = user.email;
+    const emailElement = document.getElementById("currentUserEmail");
     emailElement.textContent = userEmail;
   }
 });
@@ -71,41 +74,39 @@ function renderTaskElement(task) {
   newTask.appendChild(completionDiv);
 
   // Create and set the task name
- // Create and set the task name
-const nameElement = document.createElement("p");
-nameElement.id = "name";
-nameElement.textContent = task.taskName; // Corrected property name
-newTask.appendChild(nameElement);
+  // Create and set the task name
+  const nameElement = document.createElement("p");
+  nameElement.id = "name";
+  nameElement.textContent = task.taskName; // Corrected property name
+  newTask.appendChild(nameElement);
 
-// Create and set the due date
-const dateElement = document.createElement("p");
-dateElement.id = "date";
-const dateObject = new Date(task.taskDate); // Corrected property name
-dateElement.textContent = `${(dateObject.getMonth() + 1)
-  .toString()
-  .padStart(2, "0")}/${dateObject
-  .getDate()
-  .toString()
-  .padStart(2, "0")}/${dateObject.getFullYear()}`;
-newTask.appendChild(dateElement);
+  // Create and set the due date
+  const dateElement = document.createElement("p");
+  dateElement.id = "date";
+  const dateObject = new Date(task.taskDate); // Corrected property name
+  dateElement.textContent = `${(dateObject.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${dateObject
+    .getDate()
+    .toString()
+    .padStart(2, "0")}/${dateObject.getFullYear()}`;
+  newTask.appendChild(dateElement);
 
-// Create and set the task description
-const descriptionElement = document.createElement("p");
-descriptionElement.id = "description";
-descriptionElement.textContent = task.taskDescription; // Corrected property name
-newTask.appendChild(descriptionElement);
-
+  // Create and set the task description
+  const descriptionElement = document.createElement("p");
+  descriptionElement.id = "description";
+  descriptionElement.textContent = task.taskDescription; // Corrected property name
+  newTask.appendChild(descriptionElement);
 
   // Create the options button with the icon
   const deleteBtn = document.createElement("button");
   deleteBtn.id = "optionsBtn";
-  deleteBtn.addEventListener('click', async () => {
-    const deleteRef = ref(database, "users/" + task.uid + "/tasks/" + task.key)
+  deleteBtn.addEventListener("click", async () => {
+    const deleteRef = ref(database, "users/" + task.uid + "/tasks/" + task.key);
     remove(deleteRef);
-    const removedElement = document.getElementById(task.key)
-    removedElement.style.display = 'none';
-  
-  })
+    const removedElement = document.getElementById(task.key);
+    removedElement.style.display = "none";
+  });
   const iconImage = document.createElement("img");
   iconImage.src = "/src/images/trashIcon.png";
   iconImage.alt = "Icon";
@@ -126,9 +127,9 @@ function updateCompletedField(task) {
 
 const firebaseLogout = () => {
   signOut(auth).then(() => {
-    window.location.href = "../index.html"
-  })
-}
+    window.location.href = "../index.html";
+  });
+};
 
-const logoutBtn = document.getElementById('logout');
-logoutBtn.addEventListener('click', firebaseLogout)
+const logoutBtn = document.getElementById("logout");
+logoutBtn.addEventListener("click", firebaseLogout);

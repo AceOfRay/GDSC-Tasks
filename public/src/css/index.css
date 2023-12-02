@@ -21,7 +21,8 @@ nav {
 
 #container {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #loginForm {
@@ -30,6 +31,7 @@ nav {
   justify-content: center;
   align-items: center;
   margin: 10vw;
+  margin-bottom:1vw;
   padding: 2vw;
   background-color: rgb(197, 224, 248);
   border: 2px solid rgb(0, 140, 255);
@@ -54,10 +56,28 @@ nav {
 
 #loginButton,
 #emailInput,
-#passwordInput {
+#passwordInput,
+#googleLogin {
   padding: 1vh;
   background-color: aliceblue;
   border: 2px solid rgb(0, 140, 255);
   border-radius: 1vh;
   text-align: center;
+}
+
+#loginButton {
+  cursor: pointer;
+}
+#googleLogin {
+  margin-bottom:7vw;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+#googleLogo {
+  width:1.8vw;
+  height:auto;
+  margin:.5vw;
 }
